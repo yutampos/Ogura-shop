@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${getOnlyItem.name}">の商品情報</title>
+<link rel="stylesheet" href="http://unpkg.com/ress/dist/ress.min.css">
+<link href="css/style.css" rel="stylesheet">
+<link th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<!-- <script th:src="@{/js/OguraShop.js}" ></script> -->
+<script th:href="@{/webjars/jquery/3.5.0/js/jquery.min.js}"></script>
+</head>
+<body>
+	<nav class="navbar navbar-light bg-light static-top">
+		<div class="container">
+			<a class="navbar-brand" th:href="@{/}" href="#!"><img
+				class="site-logo" alt="ショッピングサイトOGURA"
+				src="https://seeklogo.com/images/I/i-am-a-bean-logo-DF7AEE03F3-seeklogo.com.png">OGURA</a>
+			<form class="form-inline " th:action="@{/search}" method="post"
+				th:object="${formData}">
+				<div class="form-group ">
+					<div class="input-group">
+						<div class="">
+							<select class="custom-select" th:field="*{searchId}">
+								<option selected="selected" value="0">全て</option>
+								<option value="1">食料品</option>
+								<option value="2">美容品</option>
+								<option value="3">雑貨</option>
+							</select>
+						</div>
+						<input type="text" class="form-control bg-ofline-primary"
+							id="exampleInputAmount" placeholder="商品名を入力してください"
+							th:field="*{searchName}" aria-describedby="button-addon">
+						<div class="input-group-append">
+							<button class="btn btn-primary " type="submit" id="button-addon">検索</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="btn-group">
+				<a class="btn btn-outline-primary" href="#signup">カート</a> <a
+					class="btn btn-primary" href="#signup">ログイン</a>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		<div class="container p-5">
+			<div class="row ">
+				<div class="col-md-6">
+					<div class="item-main">
+						<img alt="商品画像" th:src="${getOnlyItem.url}" class="item-main-view">
+					</div>
+				</div>
+				<div class="col-md-6" th:object="${getOnlyItem}">
+					<h2 th:text="*{name}"></h2>
+					<hr width="400">
+					<div class="taxOnPrice">
+						<span>¥</span><a th:text="*{taxOnPrice}"></a>
+					</div>
+					<div class="price">
+						（税抜:￥<a th:text="*{Price}"></a>）
+					</div>
+					<br>
+					<button id="buy-button" class="btn btn-warning">カートに入れる</button>
+					<button id="buy-button" class="btn btn-success">今すぐ購入</button>
+					<hr width="400">
+					<p>この商品について</p>
+					<p th:text="*{description}"></p>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script th:href="@{/webjars/jquery/3.5.0/js/jquery.min.js}"></script>
+
+	<script th:href="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

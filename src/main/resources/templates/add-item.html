@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/webjars/jquery/3.5.0/js/jquery.min.js}" rel="stylesheet">
+</head>
+<body>
+	<header>
+        <div class="row">
+            <div class="col-sm-12 shadow p-2 mb-3 bg-info">
+                <h1 class="text-center shadow p-2 mb-3 bg-info text-white">オーナー管理画面</h1>
+                <ul class="nav  navbar-light    bg-info  justify-content-center rounded-bottom rounded-lg">
+                    <li class="nav-item p-1">
+                        <form th:action="@{/add-item}" th:method="get">
+                            <button class="btn btn-outline-light" type="submit">新規登録</button>
+                        </form>
+                    </li>
+                    <li class="nav-item p-1" >
+                        <form th:action="@{/edit-view-list}" th:method="get">
+                            <button class="btn  btn-outline-light" type="submit">商品情報更新</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+	
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-6 shadow p-3 mb-5 bg-white rounded" >
+					<form action="/set" th:object="${itemSet}" th:method="post">
+						<div class="form-group">
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label" for="name">商品名</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="text" placeholder="名前" id="name" th:field="*{name}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label" for="description">商品情報</label>
+							<div class="col-sm-8">
+								<textarea rows="20" cols="32" id="description" th:field="*{description}"></textarea>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label" for="price">価格（税抜）</label>
+							<div class="col-sm-8">
+								<span class="form-inline">
+									<input class="form-control" type="text" id="price" placeholder="値段" th:field="*{price}">
+									<label  for="price">円</label>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label" for="tax-id">税率</label>
+							<div class="col-sm-8">
+								<select class="form-control" id="tax-id" th:field="*{taxId}">
+									<option value="1" >8%</option>
+									<option value="2" >10%</option>
+								</select>	
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label" for="status">在庫情報</label>
+							<div class="col-sm-8">
+								<select class="form-control" id="status" th:field="*{status}">
+									<option value="在庫あり" >在庫あり</option>
+									<option value="在庫なし（入荷予定はありません）" >在庫なし（入荷予定はありません）</option>
+									<option value="納期1~2日" >納期1~2日</option>
+									<option value="納期3~7日" >納期3~7日</option>
+									<option value="納期1~2週間" >納期1~2週間</option>
+									<option value="納期2~3週間" >納期2~3週間</option>
+									<option value="納期1ヶ月" >納期1ヶ月</option>
+									<option value="納期2ヶ月~" >納期2ヶ月~</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label" for="group-id">商品グループ</label>
+							<div class="col-sm-8">
+								<select class="form-control" id="group-id" th:field="*{groupId}">
+									<option value="1" >食料品</option>
+									<option value="2" >美容品</option>
+									<option value="3" >雑貨</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label" for="urlTag">画像URL</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="text" id="urlTag" th:field="*{url}" placeholder="http://www.amazon.com/hogehoge.jpg">
+							</div>
+						</div>
+						<div class="form-group">
+							<button class="form-control btn btn-success" type="submit">登録</button>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-3">
+				</div>
+			</div>
+		</div>
+		<p th:text="${created}"></p>
+	</main>
+	
+	<script th:href="@{/webjars/jquery/3.5.0/js/jquery.min.js}"></script>
+
+    <script th:href="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+    
+</body>
+</html>
