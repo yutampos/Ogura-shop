@@ -1,4 +1,0 @@
-<input type="text" placeholder="商品名を入力してください"  th:field="*{searchName}">
-	            	<div class="input-group-addon">
-		                <input type="submit" value="検索">
-		            </div>

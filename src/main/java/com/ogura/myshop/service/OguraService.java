@@ -2,7 +2,6 @@ package com.ogura.myshop.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ogura.myshop.dao.Dao;
@@ -13,8 +12,12 @@ import com.ogura.myshop.entity.item.ItemUpdate;
 
 @Service
 public class OguraService {
-    @Autowired
-    Dao dao;
+
+    private final Dao dao;
+
+    public OguraService(Dao dao) {
+	this.dao = dao;
+    }
 
     public List<Item> getItems() {
 	return dao.latestItems();

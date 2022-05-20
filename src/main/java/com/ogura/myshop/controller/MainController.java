@@ -2,7 +2,6 @@ package com.ogura.myshop.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +19,19 @@ import com.ogura.myshop.service.OguraService;
 @Controller
 @RequestMapping
 public class MainController {
-    @Autowired
-    OguraService oguraService;
+
+    private final OguraService oguraService;
+
+    public MainController(OguraService oguraService) {
+	this.oguraService = oguraService;
+    }
 
     @GetMapping("/")
     public String top(Model model, @ModelAttribute FormData formData) {
 	List<Item> getTopData = oguraService.getItems();
 	model.addAttribute("getLatestList", getTopData);
 
-	return "top";
+	return "index";
     }
 
     @PostMapping("/search")
@@ -52,7 +55,7 @@ public class MainController {
 	    model.addAttribute("searchTitle", searchTitle);
 	}
 
-	return "findView";
+	return "find-view";
     }
 
     @GetMapping("/{id}")
@@ -61,7 +64,7 @@ public class MainController {
 	Item getOnlyItem = oguraService.findByOnly(id);
 	model.addAttribute("getOnlyItem", getOnlyItem);
 
-	return "itemPage";
+	return "item-page";
     }
 
 //    @PostMapping("/cart")
@@ -77,17 +80,17 @@ public class MainController {
 //    }
 
     // 以降オーナー設定画面
-    @GetMapping("/orner")
-    public String orner() {
-	return "redirect:/update";
+    @GetMapping("/owner")
+    public String owner() {
+	return "redirect:/edit-view-list";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/add-item")
     public String order(@ModelAttribute("itemSet") ItemCreate itemSet, Model model) {
 	int status = 0;
 	model.addAttribute("statusEnable", status);
 
-	return "create";
+	return "add-item";
     }
 
     @PostMapping("/set")
@@ -95,27 +98,27 @@ public class MainController {
 	model.addAttribute("created", "登録しました");
 	oguraService.itemCreate(itemCreate);
 
-	return "redirect:/update";
+	return "redirect:/edit-view-list";
     }
 
-    @GetMapping("/update")
+    @GetMapping("/edit-view-list")
     public String update(Model model, @ModelAttribute("itemUpdate") ItemUpdate itemUpdate, FormData form) {
 	List<Item> findItems = oguraService.findByAll(form);
 	model.addAttribute("findData", findItems);
 
-	return "update";
+	return "edit-view-list";
     }
 
-    @GetMapping("/set/{id}")
+    @GetMapping("/edit-item/{id}")
     public String itemSet(Model model, @PathVariable("id") int id, Item item,
 	    @ModelAttribute("itemUpdate") ItemUpdate itemUpdate) {
 	Item getOnlyItem = oguraService.findByOnly(id);
 	model.addAttribute("getOnlyItem", getOnlyItem);
 
-	return "updateView";
+	return "edit-item";
     }
 
-    @PostMapping("/set/{id}")
+    @PostMapping("/edit-item/{id}")
     public String itemReplace(Model model, @PathVariable("id") int id, Item item,
 	    @ModelAttribute("itemUpdate") ItemUpdate itemUpdate) {
 	itemUpdate.setItem_id(id);
@@ -124,13 +127,13 @@ public class MainController {
 	Item getOnlyItem = oguraService.findByOnly(id);
 	model.addAttribute("getOnlyItem", getOnlyItem);
 
-	return "redirect:/update";
+	return "redirect:/edit-view-list";
     }
 
     @GetMapping("/delete/{id}")
     public String itemSet(Model model, @PathVariable("id") int id, Item item) {
 	oguraService.itemDelete(id);
 
-	return "redirect:/update";
+	return "redirect:/edit-view-list";
     }
 }
